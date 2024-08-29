@@ -1,12 +1,14 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { colors } from '../styles/colors';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { TabNavigation } from './Tab.navigation';
 import React from 'react';
 import { Camera } from '../screens/index';
+import { Imagens } from '../screens/index'
 type DrawerParamList = {
     Tab: undefined
     Camera: undefined
+    Imagens: undefined
 }
 type DrawerScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'Tab'>
 export type DrawerTypes = {
@@ -39,6 +41,13 @@ export function DrawerNavigation() {
                         <Ionicons name='camera' size={24} color={colors.white} />
                     ),
                 }}
+            />
+            <Drawer.Screen name='Imagens' component={Imagens}
+            options={{
+                drawerIcon: () => (
+                    <FontAwesome name="picture-o" size={24} color={colors.white} />
+                ),
+            }}
             />
         </Drawer.Navigator>
     )

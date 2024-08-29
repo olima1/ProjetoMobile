@@ -39,6 +39,12 @@
           "savePhotosPermission":"Permite $(lima2) salvar suas fotos",
           "isAccessMediaLocationEnable":true
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photoPermission": "o aplicativo acessa suas fotos para que você possa compartilhá-las."
+        }
       ]
     ]
   }
