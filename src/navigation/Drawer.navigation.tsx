@@ -6,11 +6,13 @@ import React from 'react';
 import { Camera } from '../screens/index';
 import { Imagens } from '../screens/index';
 import { QrCode } from '../screens/index';
+import { LocationMap } from '../screens/index'
 type DrawerParamList = {
     Tab: undefined
     Camera: undefined
     Imagens: undefined
     Qrcode: undefined
+    LocationMap: undefined
 }
 type DrawerScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'Tab'>
 export type DrawerTypes = {
@@ -55,6 +57,13 @@ export function DrawerNavigation() {
             options={{
                 drawerIcon: () => (
                     <MaterialCommunityIcons name="qrcode-scan" size={24} color={colors.white} />
+                ),
+            }}
+            />
+            <Drawer.Screen name='LocationMap' component={LocationMap}
+            options={{
+                drawerIcon: () => (
+                    <FontAwesome name="picture-o" size={24} color={colors.white}/>
                 ),
             }}
             />
