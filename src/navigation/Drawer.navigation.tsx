@@ -6,13 +6,13 @@ import React from 'react';
 import { Camera } from '../screens/index';
 import { Imagens } from '../screens/index';
 import { QrCode } from '../screens/index';
-import { LocationMap } from '../screens/index'
+import { Localizacao } from '../screens/index'
 type DrawerParamList = {
     Tab: undefined
     Camera: undefined
     Imagens: undefined
     Qrcode: undefined
-    LocationMap: undefined
+    Localizacao: undefined
 }
 type DrawerScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'Tab'>
 export type DrawerTypes = {
@@ -60,7 +60,7 @@ export function DrawerNavigation() {
                 ),
             }}
             />
-            <Drawer.Screen name='LocationMap' component={LocationMap}
+            <Drawer.Screen name='Localização' component={Localizacao}
             options={{
                 drawerIcon: () => (
                     <FontAwesome name="picture-o" size={24} color={colors.white}/>

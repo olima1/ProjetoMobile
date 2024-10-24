@@ -13,5 +13,17 @@ export const styles = StyleSheet.create({
     paragraph:{
         fontSize:18,
         textAlign:"center"
+    }, 
+    searchContainer:{
+        position:'absolute',
+        zIndex:1,
+        width:'90%',
+        top:10
+    },
+    searchInput: {
+        height:56,
+        borderRadius:7,
+        borderWidth:2,
+        borderColor: colors.black
     }
 });

@@ -6,4 +6,4 @@ export { CadMessage } from "./CadMensagem"
 export { Camera } from "./Camera"
 export { Imagens } from "./Imagens"
 export { QrCode } from "./QrCode"
-export { LocationMap } from'./LocationMap'
+export { Localizacao } from'./LocationMap'
