@@ -7,3 +7,4 @@ export { Camera } from "./Camera"
 export { Imagens } from "./Imagens"
 export { QrCode } from "./QrCode"
 export { Localizacao } from'./LocationMap'
+export { LocationMapOrDest } from './LocationMapOrDest'

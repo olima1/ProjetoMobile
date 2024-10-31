@@ -7,12 +7,14 @@ import { Camera } from '../screens/index';
 import { Imagens } from '../screens/index';
 import { QrCode } from '../screens/index';
 import { Localizacao } from '../screens/index'
+import { LocationMapOrDest } from '../screens/index'
 type DrawerParamList = {
     Tab: undefined
     Camera: undefined
     Imagens: undefined
     Qrcode: undefined
     Localizacao: undefined
+    LocationMapOrDest: undefined
 }
 type DrawerScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'Tab'>
 export type DrawerTypes = {
@@ -60,7 +62,14 @@ export function DrawerNavigation() {
                 ),
             }}
             />
-            <Drawer.Screen name='Localização' component={Localizacao}
+            <Drawer.Screen name='Localizacao' component={Localizacao}
+            options={{
+                drawerIcon: () => (
+                    <FontAwesome name="picture-o" size={24} color={colors.white}/>
+                ),
+            }}
+            />
+            <Drawer.Screen name='LocationMapOrDest' component={LocationMapOrDest}
             options={{
                 drawerIcon: () => (
                     <FontAwesome name="picture-o" size={24} color={colors.white}/>
