@@ -10,9 +10,10 @@ export interface IResponseLocation {
     latitude: number
     longitude: number
     created_at: string
+    update_at: string
     user:{
-        id:number,
-        name:string,
+        id:number
+        name:string
         email:string
     }
 }
@@ -22,6 +23,7 @@ class LocationData {
         return api.get<IResponseLocation[]>('/location')
     }
     store(data: ILocation) {
+        console.log(data)
         return api.post('/location', data)
     }
 }

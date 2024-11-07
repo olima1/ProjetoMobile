@@ -17,13 +17,11 @@ export function LocationMapOrDest() {
         null
     );
     const [origin, setOrigin] = useState<Region>();
-    const [region, setRegion] = useState<Region>();
     const [marker, setMarker] = useState<Region[]>();
     const [errorMsg, setErrorMsg] = useState<null | string>(null);
     const [destination, setDestination] = useState<Region | null>(null);
     const mapRef = useRef<MapView>(null)
     const placesRef = useRef<GooglePlacesAutocompleteRef>(null)
-    const [reverse, setReverse] = useState<string>()
 
     useEffect(() => {
         const handleLocation = async () => {
@@ -34,11 +32,39 @@ export function LocationMapOrDest() {
             }
             let location = await Location.getCurrentPositionAsync();
             if (location) {
+                setOrigin({
+                    latitude:location.coords.latitude,
+                    longitude:location.coords.longitude,
+                    latitudeDelta: 0.004,
+                    longitudeDelta: 0.004
+                })
                 try {
-                    await apiLocation.store({
+                    const a = await apiLocation.store({
                         latitude: location.coords.latitude,
                         longitude: location.coords.longitude
                     })
+                    console.log(a.data)
+                    const localiza = await apiLocation.index()
+                    if (localiza.data.length > 0) {
+                        console.log(localiza.data)
+                        for(const element of localiza.data) {
+                            if(marker) {
+                                setMarker([...marker, {
+                                    latitude: element.latitude as unknown as number,
+                                    longitude: element.longitude as unknown as number,
+                                    latitudeDelta: 0.004,
+                                    longitudeDelta: 0.004
+                                }])
+                            }else {
+                                setMarker([{
+                                    latitude: element.latitude as unknown as number,
+                                    longitude: element.longitude as unknown as number,
+                                    latitudeDelta: 0.004,
+                                    longitudeDelta: 0.004
+                                }])
+                            }
+                        }
+                    }
                 } catch (error) {
                     const err = error as AxiosError
                     console.log(err.response?.data)
@@ -47,37 +73,10 @@ export function LocationMapOrDest() {
                 const reverseGeo = await Location.reverseGeocodeAsync(
                     { latitude: location.coords.latitude, longitude: location.coords.longitude }
                 )
-                if (reverseGeo && reverseGeo.length > 0) {
-                    setReverse(`${reverseGeo[0].country}, ${reverseGeo[0].city}, ${reverseGeo[0].postalCode} `)
-                    placesRef.current?.setAddressText(`${reverseGeo[0].country}, ${reverseGeo[0].city}, ${reverseGeo[0].postalCode} `)
+                if (reverseGeo && reverseGeo[0].street !== null) {
+                    placesRef.current?.setAddressText(`${reverseGeo[0].street}, ${reverseGeo[0].streetNumber}, ${reverseGeo[0].postalCode} `)
                 } else
                     console.log('erro')
-                setOrigin({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: 0.004,
-                    longitudeDelta: 0.004,
-                })
-            }
-            const localiza = await apiLocation.index()
-            if (localiza.data.length > 0) {
-                for (const element of localiza.data) {
-                    if (marker) {
-                        setMarker([...marker, {
-                            latitude: element.latitude as unknown as number,
-                            longitude: element.longitude as unknown as number,
-                            latitudeDelta: 0.004,
-                            longitudeDelta: 0.004
-                        }])
-                    } else {
-                        setMarker([{
-                            latitude: element.latitude as unknown as number,
-                            longitude: element.longitude as unknown as number,
-                            latitudeDelta: 0.004,
-                            longitudeDelta: 0.004
-                        }])
-                    }
-                }
             }
         }
         handleLocation();
@@ -100,7 +99,24 @@ export function LocationMapOrDest() {
             }
         }
     }
-
+    async function handleDestination(data: GooglePlaceData, details: GooglePlaceDetail | null) {
+        if (details) {
+            setDestination({
+                latitude: details?.geometry.location.lat,
+                longitude: details?.geometry.location.lng,
+                latitudeDelta: 0.004,
+                longitudeDelta: 0.004
+            })
+            if (marker) {
+                setMarker([...marker, {
+                    latitude: details?.geometry.location.lat,
+                    longitude: details?.geometry.location.lng,
+                    latitudeDelta: 0.004,
+                    longitudeDelta: 0.004
+                }])
+            }
+        }
+    }
     function handleClickMarker(e: LatLng) {
         if (marker) {
             setMarker([...marker, {
@@ -125,10 +141,9 @@ export function LocationMapOrDest() {
     } else if (location) {
         text = JSON.stringify(location);
     }
-    console.log(region)
     return (
         <View style={styles.container}>
-            {reverse && (<GooglePlacesAutocomplete
+            <GooglePlacesAutocomplete
                 ref={placesRef}
                 styles={{ container: styles.searchContainerOrigin, textInput: styles.searchInput }}
                 placeholder="Origem"
@@ -136,14 +151,13 @@ export function LocationMapOrDest() {
                 GooglePlacesDetailsQuery={{ fields: "geometry" }}
                 enablePoweredByContainer={false}
                 query={{
-                    key: '',
+                    key: 'AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA',
                     language: 'pt-BR'
                 }}
                 GoogleReverseGeocodingQuery={{ language: 'pt-BR' }}
                 onFail={setErrorMsg}
                 onPress={handleOrigin}
             />
-            )}
             <GooglePlacesAutocomplete
                 styles={{ container: styles.searchContainerDestination, textInput: styles.searchInput }}
                 placeholder="Destino"
@@ -151,14 +165,14 @@ export function LocationMapOrDest() {
                 GooglePlacesDetailsQuery={{ fields: "geometry" }}
                 enablePoweredByContainer={false}
                 query={{
-                    key: '',
+                    key: 'AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA',
                     language: 'pt-BR'
                 }}
                 onFail={setErrorMsg}
-                onPress={handleOrigin}
+                onPress={handleDestination}
             />
-            {!origin && !reverse && <Text style={styles.paragraph}>{text}</Text>}
-            {origin && reverse && (
+            {!origin && <Text style={styles.paragraph}>{text}</Text>}
+            {origin && (
                 <MapView style={styles.map} region={origin} showsUserLocation={true}
                     ref={mapRef} onPress={(e) => handleClickMarker(e.nativeEvent.coordinate)}>
                     {marker &&
@@ -169,7 +183,7 @@ export function LocationMapOrDest() {
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
-                            apikey=''
+                            apikey='AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA'
                             strokeColor={colors.black}
                             strokeWidth={7}
                             lineDashPattern={[0]}

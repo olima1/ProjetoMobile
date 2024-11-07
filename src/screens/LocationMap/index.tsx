@@ -84,7 +84,7 @@ export function Localizacao() {
                     GooglePlacesDetailsQuery={{fields: "geometry"}}
                     enablePoweredByContainer={false}
                     query={{
-                        key:'',
+                        key:'AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA',
                         language:'pt-br'
                     }}
                     onFail={setErrorMsg}
@@ -107,7 +107,7 @@ export function Localizacao() {
                         <MapViewDirections
                             origin={region}
                             destination={destination}
-                            apikey=''
+                            apikey='AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA'
                             strokeColor={colors.black}
                             strokeWidth={7}
                             lineDashPattern={[0]}
