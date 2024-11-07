@@ -151,7 +151,7 @@ export function LocationMapOrDest() {
                 GooglePlacesDetailsQuery={{ fields: "geometry" }}
                 enablePoweredByContainer={false}
                 query={{
-                    key: 'AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA',
+                    key: '',
                     language: 'pt-BR'
                 }}
                 GoogleReverseGeocodingQuery={{ language: 'pt-BR' }}
@@ -165,7 +165,7 @@ export function LocationMapOrDest() {
                 GooglePlacesDetailsQuery={{ fields: "geometry" }}
                 enablePoweredByContainer={false}
                 query={{
-                    key: 'AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA',
+                    key: '',
                     language: 'pt-BR'
                 }}
                 onFail={setErrorMsg}
@@ -183,7 +183,7 @@ export function LocationMapOrDest() {
                         <MapViewDirections
                             origin={origin}
                             destination={destination}
-                            apikey='AIzaSyDdDU8GLhWRZjrmp55NTqrR1GUL9BOA9pA'
+                            apikey=''
                             strokeColor={colors.black}
                             strokeWidth={7}
                             lineDashPattern={[0]}
