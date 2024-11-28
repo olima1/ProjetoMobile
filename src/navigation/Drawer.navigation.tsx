@@ -8,6 +8,7 @@ import { Imagens } from '../screens/index';
 import { QrCode } from '../screens/index';
 import { Localizacao } from '../screens/index'
 import { LocationMapOrDest } from '../screens/index'
+import { Acelerometro } from '../screens/Acelerometro/index'
 type DrawerParamList = {
     Tab: undefined
     Camera: undefined
@@ -15,6 +16,7 @@ type DrawerParamList = {
     Qrcode: undefined
     Localizacao: undefined
     LocationMapOrDest: undefined
+    Acelerometro: undefined
 }
 type DrawerScreenNavigationProp = DrawerNavigationProp<DrawerParamList, 'Tab'>
 export type DrawerTypes = {
@@ -73,6 +75,13 @@ export function DrawerNavigation() {
             options={{
                 drawerIcon: () => (
                     <FontAwesome name="picture-o" size={24} color={colors.white}/>
+                ),
+            }}
+            />
+            <Drawer.Screen name='Acelerometro' component={Acelerometro}
+            options={{
+                drawerIcon: () => (
+                    <FontAwesome name="car" size={24} color={colors.black}/>
                 ),
             }}
             />
